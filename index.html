@@ -420,11 +420,11 @@ Sello de la Fundación`;
                 const mesEmision = fechaEmision.toLocaleDateString('es-ES', { month: 'long' });
                 const añoEmision = fechaEmision.getFullYear();
                 
-                const htmlContent = \`<!DOCTYPE html>
+                const htmlContent = `<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Certificado de Donación - \${certificateData.nombre}</title>
+    <title>Certificado de Donación - ${certificateData.nombre}</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
         .certificate { border: 3px solid #2c5aa0; padding: 40px; max-width: 700px; margin: 0 auto; }
@@ -456,13 +456,13 @@ Sello de la Fundación`;
             
             <p><strong>CERTIFICA:</strong></p>
             
-            <p>Que D./Dña. <strong>\${certificateData.nombre}</strong>, con DNI <strong>\${certificateData.dni}</strong>, ha acudido el día <strong>\${fechaFormateada}</strong> de 2025, desde las <strong>\${certificateData.horaInicio}</strong> hasta las <strong>\${certificateData.horaFin}</strong> horas, a nuestras instalaciones para realizar una donación de sangre en colaboración con el <strong>Biobanco Vasco</strong>.</p>
+            <p>Que D./Dña. <strong>${certificateData.nombre}</strong>, con DNI <strong>${certificateData.dni}</strong>, ha acudido el día <strong>${fechaFormateada}</strong> de 2025, desde las <strong>${certificateData.horaInicio}</strong> hasta las <strong>${certificateData.horaFin}</strong> horas, a nuestras instalaciones para realizar una donación de sangre en colaboración con el <strong>Biobanco Vasco</strong>.</p>
             
             <p>Esta donación forma parte de la campaña especial de recolección de muestras biológicas para investigación en enfermedades priónicas.</p>
             
             <p>Y para que así conste a los efectos oportunos de justificación laboral, se expide el presente certificado.</p>
             
-            <p>En <strong>\${certificateData.ciudad}</strong>, a <strong>\${diaEmision}</strong> de <strong>\${mesEmision}</strong> de <strong>\${añoEmision}</strong>.</p>
+            <p>En <strong>${certificateData.ciudad}</strong>, a <strong>${diaEmision}</strong> de <strong>${mesEmision}</strong> de <strong>${añoEmision}</strong>.</p>
         </div>
         
         <div class="signatures">
@@ -487,7 +487,7 @@ Sello de la Fundación`;
         </div>
     </div>
 </body>
-</html>\`;
+</html>`;
                 
                 // Abrir en nueva ventana
                 const newWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
