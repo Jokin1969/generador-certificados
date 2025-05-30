@@ -248,20 +248,16 @@
     <script>
         let certificateData = {};
         
-        // Establecer fecha actual por defecto
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('fecha').value = today;
             document.getElementById('fechaEmision').value = today;
-            
-            // Establecer horas por defecto
             document.getElementById('horaInicio').value = '09:00';
             document.getElementById('horaFin').value = '10:00';
             document.getElementById('ciudad').value = 'Bilbao';
         });
         
         function generateCertificate() {
-            // Recoger datos del formulario
             certificateData = {
                 nombre: document.getElementById('nombre').value.trim(),
                 dni: document.getElementById('dni').value.trim(),
@@ -272,18 +268,14 @@
                 fechaEmision: document.getElementById('fechaEmision').value
             };
             
-            // Validar campos requeridos
             if (!certificateData.nombre || !certificateData.dni || !certificateData.fecha || 
                 !certificateData.horaInicio || !certificateData.horaFin || !certificateData.ciudad) {
                 alert('Por favor, completa todos los campos obligatorios.');
                 return;
             }
             
-            // Ocultar formulario y mostrar sección de descarga
             document.getElementById('formSection').className = 'hidden';
             document.getElementById('downloadSection').className = 'download-section visible';
-            
-            // Scroll hacia arriba
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
@@ -297,9 +289,7 @@
             try {
                 const fechaObj = new Date(certificateData.fecha);
                 const fechaFormateada = fechaObj.toLocaleDateString('es-ES', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
+                    day: 'numeric', month: 'long', year: 'numeric'
                 });
                 
                 const fechaEmision = new Date(certificateData.fechaEmision);
@@ -307,87 +297,25 @@
                 const mesEmision = fechaEmision.toLocaleDateString('es-ES', { month: 'long' });
                 const añoEmision = fechaEmision.getFullYear();
                 
-                // Crear contenido del documento
-                const wordContent = `FUNDACIÓN ESPAÑOLA DE ENFERMEDADES PRIÓNICAS
-Certificado de Donación de Sangre
-
-═══════════════════════════════════════════════════════════════════
-
-Por la presente, D. Joaquín Castilla, con DNI 16287336R, en calidad de Presidente de la Fundación Española de Enfermedades Priónicas,
-
-CERTIFICA:
-
-Que D./Dña. ${certificateData.nombre}, con DNI ${certificateData.dni}, ha acudido el día ${fechaFormateada} de 2025, desde las ${certificateData.horaInicio} hasta las ${certificateData.horaFin} horas, a nuestras instalaciones para realizar una donación de sangre en colaboración con el Biobanco Vasco.
-
-Esta donación forma parte de la campaña especial de recolección de muestras biológicas para investigación en enfermedades priónicas.
-
-Y para que así conste a los efectos oportunos de justificación laboral, se expide el presente certificado.
-
-En ${certificateData.ciudad}, a ${diaEmision} de ${mesEmision} de ${añoEmision}.
-
-
-
-
-_________________________                    _________________________
-Fdo.: Joaquín Castilla                      Fdo.: Izaro Kortazar
-Presidente                                  Facultativo especialista en neurología
-Fundación Española de                       Responsable del Proyecto
-Enfermedades Priónicas                      
-
-
-
-═══════════════════════════════════════════════════════════════════
-Nota: Este documento tiene validez como justificante oficial de asistencia a donación de sangre.
-
-Sello de la Fundación`;
+                const wordContent = 'FUNDACIÓN ESPAÑOLA DE ENFERMEDADES PRIÓNICAS\nCertificado de Donación de Sangre\n\n═══════════════════════════════════════════════════════════════════\n\nPor la presente, D. Joaquín Castilla, con DNI 16287336R, en calidad de Presidente de la Fundación Española de Enfermedades Priónicas,\n\nCERTIFICA:\n\nQue D./Dña. ' + certificateData.nombre + ', con DNI ' + certificateData.dni + ', ha acudido el día ' + fechaFormateada + ' de 2025, desde las ' + certificateData.horaInicio + ' hasta las ' + certificateData.horaFin + ' horas, a nuestras instalaciones para realizar una donación de sangre en colaboración con el Biobanco Vasco.\n\nEsta donación forma parte de la campaña especial de recolección de muestras biológicas para investigación en enfermedades priónicas.\n\nY para que así conste a los efectos oportunos de justificación laboral, se expide el presente certificado.\n\nEn ' + certificateData.ciudad + ', a ' + diaEmision + ' de ' + mesEmision + ' de ' + añoEmision + '.\n\n\n\n\n_________________________                    _________________________\nFdo.: Joaquín Castilla                      Fdo.: Izaro Kortazar\nPresidente                                  Facultativo especialista en neurología\nFundación Española de                       Responsable del Proyecto\nEnfermedades Priónicas\n\n\n\n═══════════════════════════════════════════════════════════════════\nNota: Este documento tiene validez como justificante oficial de asistencia a donación de sangre.\n\nSello de la Fundación';
                 
-                // Crear modal con el contenido para copiar
                 const modal = document.createElement('div');
-                modal.style.cssText = `
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0,0,0,0.8);
-                    z-index: 10000;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                `;
+                modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; justify-content: center; align-items: center;';
                 
                 const content = document.createElement('div');
-                content.style.cssText = `
-                    background: white;
-                    padding: 30px;
-                    border-radius: 10px;
-                    max-width: 80%;
-                    max-height: 80%;
-                    overflow: auto;
-                    position: relative;
-                `;
+                content.style.cssText = 'background: white; padding: 30px; border-radius: 10px; max-width: 80%; max-height: 80%; overflow: auto; position: relative;';
                 
-                content.innerHTML = `
-                    <h3 style="margin-top: 0; color: #2c5aa0;">📄 Certificado para Word</h3>
-                    <p><strong>Instrucciones:</strong> El texto ya está seleccionado. Cópialo (Ctrl+C) y pégalo en un documento Word.</p>
-                    <textarea id="certificateText" style="width: 100%; height: 400px; font-family: monospace; font-size: 12px; border: 2px solid #2c5aa0; padding: 10px;" readonly>${wordContent}</textarea>
-                    <div style="margin-top: 15px; text-align: center;">
-                        <button onclick="copyToClipboard()" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-right: 10px;">📋 Copiar al Portapapeles</button>
-                        <button onclick="closeModal()" style="background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">❌ Cerrar</button>
-                    </div>
-                `;
+                content.innerHTML = '<h3 style="margin-top: 0; color: #2c5aa0;">📄 Certificado para Word</h3><p><strong>Instrucciones:</strong> El texto ya está seleccionado. Cópialo (Ctrl+C) y pégalo en un documento Word.</p><textarea id="certificateText" style="width: 100%; height: 400px; font-family: monospace; font-size: 12px; border: 2px solid #2c5aa0; padding: 10px;" readonly>' + wordContent + '</textarea><div style="margin-top: 15px; text-align: center;"><button onclick="copyToClipboard()" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-right: 10px;">📋 Copiar al Portapapeles</button><button onclick="closeModal()" style="background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">❌ Cerrar</button></div>';
                 
                 modal.appendChild(content);
                 document.body.appendChild(modal);
                 
-                // Seleccionar todo el texto automáticamente
-                setTimeout(() => {
+                setTimeout(function() {
                     const textarea = document.getElementById('certificateText');
                     textarea.select();
                     textarea.focus();
                 }, 100);
                 
-                // Funciones para el modal
                 window.copyToClipboard = function() {
                     const textarea = document.getElementById('certificateText');
                     textarea.select();
@@ -410,9 +338,7 @@ Sello de la Fundación`;
             try {
                 const fechaObj = new Date(certificateData.fecha);
                 const fechaFormateada = fechaObj.toLocaleDateString('es-ES', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
+                    day: 'numeric', month: 'long', year: 'numeric'
                 });
                 
                 const fechaEmision = new Date(certificateData.fechaEmision);
@@ -420,82 +346,13 @@ Sello de la Fundación`;
                 const mesEmision = fechaEmision.toLocaleDateString('es-ES', { month: 'long' });
                 const añoEmision = fechaEmision.getFullYear();
                 
-                const htmlContent = `<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Certificado de Donación - ${certificateData.nombre}</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
-        .certificate { border: 3px solid #2c5aa0; padding: 40px; max-width: 700px; margin: 0 auto; }
-        .header { text-align: center; margin-bottom: 30px; }
-        .foundation-name { font-size: 18px; font-weight: bold; text-transform: uppercase; color: #2c5aa0; margin-bottom: 10px; }
-        .certificate-title { font-size: 16px; font-weight: bold; margin-bottom: 20px; }
-        .content { font-size: 14px; text-align: justify; }
-        .signatures { display: flex; justify-content: space-between; margin-top: 60px; }
-        .signature-block { text-align: center; flex: 1; }
-        .signature-line { border-bottom: 1px solid #333; height: 50px; margin-bottom: 10px; }
-        .signature-name { font-weight: bold; margin-bottom: 5px; }
-        .signature-title { font-size: 12px; color: #666; }
-        .footer-note { margin-top: 30px; font-size: 12px; border-top: 1px solid #ddd; padding-top: 15px; }
-        .print-btn { position: fixed; top: 20px; right: 20px; background: #2c5aa0; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
-        @media print { .print-btn { display: none; } body { margin: 0; } }
-    </style>
-</head>
-<body>
-    <button class="print-btn" onclick="window.print()">🖨️ Imprimir</button>
-    <div class="certificate">
-        <div class="header">
-            <div class="foundation-name">FUNDACIÓN ESPAÑOLA DE ENFERMEDADES PRIÓNICAS</div>
-            <div class="certificate-title">Certificado de Donación de Sangre</div>
-            <hr>
-        </div>
-        
-        <div class="content">
-            <p>Por la presente, <strong>D. Joaquín Castilla</strong>, con DNI <strong>16287336R</strong>, en calidad de Presidente de la Fundación Española de Enfermedades Priónicas,</p>
-            
-            <p><strong>CERTIFICA:</strong></p>
-            
-            <p>Que D./Dña. <strong>${certificateData.nombre}</strong>, con DNI <strong>${certificateData.dni}</strong>, ha acudido el día <strong>${fechaFormateada}</strong> de 2025, desde las <strong>${certificateData.horaInicio}</strong> hasta las <strong>${certificateData.horaFin}</strong> horas, a nuestras instalaciones para realizar una donación de sangre en colaboración con el <strong>Biobanco Vasco</strong>.</p>
-            
-            <p>Esta donación forma parte de la campaña especial de recolección de muestras biológicas para investigación en enfermedades priónicas.</p>
-            
-            <p>Y para que así conste a los efectos oportunos de justificación laboral, se expide el presente certificado.</p>
-            
-            <p>En <strong>${certificateData.ciudad}</strong>, a <strong>${diaEmision}</strong> de <strong>${mesEmision}</strong> de <strong>${añoEmision}</strong>.</p>
-        </div>
-        
-        <div class="signatures">
-            <div class="signature-block">
-                <div class="signature-line"></div>
-                <div class="signature-name">Fdo.: Joaquín Castilla</div>
-                <div class="signature-title">Presidente</div>
-                <div class="signature-title">Fundación Española de Enfermedades Priónicas</div>
-            </div>
-            
-            <div class="signature-block">
-                <div class="signature-line"></div>
-                <div class="signature-name">Fdo.: Izaro Kortazar</div>
-                <div class="signature-title">Facultativo especialista en neurología</div>
-                <div class="signature-title">Responsable del Proyecto</div>
-            </div>
-        </div>
-        
-        <div class="footer-note">
-            <p><strong>Nota:</strong> Este documento tiene validez como justificante oficial de asistencia a donación de sangre.</p>
-            <p><em>Sello de la Fundación</em></p>
-        </div>
-    </div>
-</body>
-</html>`;
+                const htmlContent = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Certificado de Donación - ' + certificateData.nombre + '</title><style>body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }.certificate { border: 3px solid #2c5aa0; padding: 40px; max-width: 700px; margin: 0 auto; }.header { text-align: center; margin-bottom: 30px; }.foundation-name { font-size: 18px; font-weight: bold; text-transform: uppercase; color: #2c5aa0; margin-bottom: 10px; }.certificate-title { font-size: 16px; font-weight: bold; margin-bottom: 20px; }.content { font-size: 14px; text-align: justify; }.signatures { display: flex; justify-content: space-between; margin-top: 60px; }.signature-block { text-align: center; flex: 1; }.signature-line { border-bottom: 1px solid #333; height: 50px; margin-bottom: 10px; }.signature-name { font-weight: bold; margin-bottom: 5px; }.signature-title { font-size: 12px; color: #666; }.footer-note { margin-top: 30px; font-size: 12px; border-top: 1px solid #ddd; padding-top: 15px; }.print-btn { position: fixed; top: 20px; right: 20px; background: #2c5aa0; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }@media print { .print-btn { display: none; } body { margin: 0; } }</style></head><body><button class="print-btn" onclick="window.print()">🖨️ Imprimir</button><div class="certificate"><div class="header"><div class="foundation-name">FUNDACIÓN ESPAÑOLA DE ENFERMEDADES PRIÓNICAS</div><div class="certificate-title">Certificado de Donación de Sangre</div><hr></div><div class="content"><p>Por la presente, <strong>D. Joaquín Castilla</strong>, con DNI <strong>16287336R</strong>, en calidad de Presidente de la Fundación Española de Enfermedades Priónicas,</p><p><strong>CERTIFICA:</strong></p><p>Que D./Dña. <strong>' + certificateData.nombre + '</strong>, con DNI <strong>' + certificateData.dni + '</strong>, ha acudido el día <strong>' + fechaFormateada + '</strong> de 2025, desde las <strong>' + certificateData.horaInicio + '</strong> hasta las <strong>' + certificateData.horaFin + '</strong> horas, a nuestras instalaciones para realizar una donación de sangre en colaboración con el <strong>Biobanco Vasco</strong>.</p><p>Esta donación forma parte de la campaña especial de recolección de muestras biológicas para investigación en enfermedades priónicas.</p><p>Y para que así conste a los efectos oportunos de justificación laboral, se expide el presente certificado.</p><p>En <strong>' + certificateData.ciudad + '</strong>, a <strong>' + diaEmision + '</strong> de <strong>' + mesEmision + '</strong> de <strong>' + añoEmision + '</strong>.</p></div><div class="signatures"><div class="signature-block"><div class="signature-line"></div><div class="signature-name">Fdo.: Joaquín Castilla</div><div class="signature-title">Presidente</div><div class="signature-title">Fundación Española de Enfermedades Priónicas</div></div><div class="signature-block"><div class="signature-line"></div><div class="signature-name">Fdo.: Izaro Kortazar</div><div class="signature-title">Facultativo especialista en neurología</div><div class="signature-title">Responsable del Proyecto</div></div></div><div class="footer-note"><p><strong>Nota:</strong> Este documento tiene validez como justificante oficial de asistencia a donación de sangre.</p><p><em>Sello de la Fundación</em></p></div></div></body></html>';
                 
-                // Abrir en nueva ventana
                 const newWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
                 if (newWindow) {
                     newWindow.document.open();
                     newWindow.document.write(htmlContent);
                     newWindow.document.close();
-                    
                     alert('¡Certificado HTML abierto en nueva ventana! Puedes imprimirlo directamente desde ahí usando Ctrl+P o el botón "🖨️ Imprimir".');
                 } else {
                     alert('No se pudo abrir la nueva ventana. Por favor, permite ventanas emergentes y vuelve a intentarlo.');
