@@ -343,7 +343,7 @@ Sello de la Fundación`;
                 
                 // Crear modal con el contenido para copiar
                 const modal = document.createElement('div');
-                modal.style.cssText = "`
+                modal.style.cssText = `
                     position: fixed;
                     top: 0;
                     left: 0;
@@ -354,10 +354,10 @@ Sello de la Fundación`;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                \`;
+                `;
                 
                 const content = document.createElement('div');
-                content.style.cssText = \`
+                content.style.cssText = `
                     background: white;
                     padding: 30px;
                     border-radius: 10px;
@@ -365,17 +365,17 @@ Sello de la Fundación`;
                     max-height: 80%;
                     overflow: auto;
                     position: relative;
-                \`;
+                `;
                 
-                content.innerHTML = \`
+                content.innerHTML = `
                     <h3 style="margin-top: 0; color: #2c5aa0;">📄 Certificado para Word</h3>
                     <p><strong>Instrucciones:</strong> El texto ya está seleccionado. Cópialo (Ctrl+C) y pégalo en un documento Word.</p>
-                    <textarea id="certificateText" style="width: 100%; height: 400px; font-family: monospace; font-size: 12px; border: 2px solid #2c5aa0; padding: 10px;" readonly>\${wordContent}</textarea>
+                    <textarea id="certificateText" style="width: 100%; height: 400px; font-family: monospace; font-size: 12px; border: 2px solid #2c5aa0; padding: 10px;" readonly>${wordContent}</textarea>
                     <div style="margin-top: 15px; text-align: center;">
                         <button onclick="copyToClipboard()" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-right: 10px;">📋 Copiar al Portapapeles</button>
                         <button onclick="closeModal()" style="background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">❌ Cerrar</button>
                     </div>
-                \`;
+                `;
                 
                 modal.appendChild(content);
                 document.body.appendChild(modal);
