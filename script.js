@@ -92,9 +92,7 @@ Enfermedades Priónicas
 
 
 ═══════════════════════════════════════════════════════════════════
-Nota: Este documento tiene validez como justificante oficial de asistencia a donación de sangre.
-
-Sello de la Fundación`;
+Nota: Este documento tiene validez como justificante oficial de asistencia a donación de sangre.`;
 }
 
 // Función para copiar al portapapeles
@@ -209,6 +207,11 @@ function downloadHTML() {
             text-align: center; 
             margin-bottom: 30px; 
         }
+        .certificate-logo {
+            max-width: 100px;
+            height: auto;
+            margin-bottom: 15px;
+        }
         .foundation-name { 
             font-size: 18px; 
             font-weight: bold; 
@@ -234,10 +237,11 @@ function downloadHTML() {
             text-align: center; 
             flex: 1; 
         }
-        .signature-line { 
-            border-bottom: 1px solid #333; 
-            height: 50px; 
-            margin-bottom: 10px; 
+        .signature-image {
+            max-width: 120px;
+            max-height: 60px;
+            object-fit: contain;
+            margin: 10px 0;
         }
         .signature-name { 
             font-weight: bold; 
@@ -274,6 +278,7 @@ function downloadHTML() {
     <button class="print-btn" onclick="window.print()">🖨️ Imprimir</button>
     <div class="certificate">
         <div class="header">
+            <img src="FEEP.png" alt="Logo FEEP" class="certificate-logo">
             <div class="foundation-name">FUNDACIÓN ESPAÑOLA DE ENFERMEDADES PRIÓNICAS</div>
             <div class="certificate-title">Certificado de Donación de Sangre</div>
             <hr>
@@ -295,14 +300,14 @@ function downloadHTML() {
         
         <div class="signatures">
             <div class="signature-block">
-                <div class="signature-line"></div>
+                <img src="Joaquin.png" alt="Firma Joaquín Castilla" class="signature-image">
                 <div class="signature-name">Fdo.: Joaquín Castilla</div>
                 <div class="signature-title">Presidente</div>
                 <div class="signature-title">Fundación Española de Enfermedades Priónicas</div>
             </div>
             
             <div class="signature-block">
-                <div class="signature-line"></div>
+                <img src="Izaro.png" alt="Firma Izaro Kortazar" class="signature-image">
                 <div class="signature-name">Fdo.: Izaro Kortazar</div>
                 <div class="signature-title">Facultativo especialista en neurología</div>
                 <div class="signature-title">Responsable del Proyecto</div>
@@ -311,7 +316,6 @@ function downloadHTML() {
         
         <div class="footer-note">
             <p><strong>Nota:</strong> Este documento tiene validez como justificante oficial de asistencia a donación de sangre.</p>
-            <p><em>Sello de la Fundación</em></p>
         </div>
     </div>
 </body>
