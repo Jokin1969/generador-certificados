@@ -1,3 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Certificados de Donación - Fundación Española de Enfermedades Priónicas</title>
+    <meta name="description" content="Generador oficial de certificados de donación de sangre de la Fundación Española de Enfermedades Priónicas">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+            line-height: 1.6;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"], input[type="date"], input[type="time"], select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #2c5aa0;
+        }
+        .row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .col {
+            flex: 1;
+        }
+        .generate-btn {
+            background: #2c5aa0;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .generate-btn:hover {
+            background: #1e3d6f;
+        }
+        .download-section {
+            text-align: center;
+            margin-top: 30px;
+            padding: 30px;
+            background: #e8f4f8;
+            border-radius: 10px;
+            border: 3px solid #2c5aa0;
+        }
+        .download-section h3 {
+            color: #2c5aa0;
+            margin-top: 0;
+        }
+        .download-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            min-width: 200px;
+        }
+        .download-btn:hover {
+            background: #218838;
+        }
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .hidden {
+            display: none;
+        }
+        .visible {
+            display: block;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 14px;
+        }
+        @media (max-width: 600px) {
+            .row {
+                flex-direction: column;
+            }
+            body {
+                padding: 20px 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">📄 Generador de Certificados de Donación</div>
+            <div class="subtitle">Fundación Española de Enfermedades Priónicas</div>
+        </div>
+        <div class="instructions">
+            <h3>ℹ️ Instrucciones</h3>
+            <p>Completa todos los campos y haz clic en "Generar Certificado". Después podrás copiar el contenido para pegarlo en Word o generar una versión HTML imprimible.</p>
+        </div>
+        <div id="formSection">
+            <div class="form-group">
+                <label for="nombre">Nombre completo del donante:</label>
+                <input type="text" id="nombre" placeholder="Ej: María García López" required>
+            </div>
+            <div class="form-group">
+                <label for="genero">Género:</label>
+                <select id="genero" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="femenino">Femenino</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="dni">DNI:</label>
+                    <input type="text" id="dni" placeholder="12345678X" required>
+                </div>
+                <div class="col">
+                    <label for="fecha">Fecha de donación:</label>
+                    <input type="date" id="fecha" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="horaInicio">Hora de inicio:</label>
+                    <input type="time" id="horaInicio" required>
+                </div>
+                <div class="col">
+                    <label for="horaFin">Hora de fin:</label>
+                    <input type="time" id="horaFin" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="ciudad">Ciudad:</label>
+                    <input type="text" id="ciudad" placeholder="Bilbao" required>
+                </div>
+                <div class="col">
+                    <label for="fechaEmision">Fecha de emisión:</label>
+                    <input type="date" id="fechaEmision" required>
+                </div>
+            </div>
+            <button type="button" class="generate-btn" onclick="generateCertificate()">📄 Generar Certificado</button>
+        </div>
+        <div class="download-section hidden" id="downloadSection">
+            <h3>✅ ¡Certificado generado exitosamente!</h3>
+            <p>Tu certificado está listo. Elige el formato que prefieras:</p>
+            <br>
+            <button class="download-btn" onclick="copyToClipboard()">📋 Copiar y Pegar</button>
+            <br>
+            <button class="download-btn" onclick="downloadWordDoc()">💾 Descargar Word</button>
+            <br>
+            <button class="download-btn" onclick="downloadHTML()">🌐 Generar HTML imprimible</button>
+            <br><br>
+            <button class="generate-btn" onclick="showForm()" style="width: auto; padding: 10px 20px;">← Crear otro certificado</button>
+        </div>
+        <div class="footer">
+            <p><strong>Fundación Española de Enfermedades Priónicas</strong></p>
+            <p>Sistema de generación de certificados de donación v1.0</p>
+        </div>
+    </div>
 <script>
 let certificateData = {};
 
@@ -47,29 +263,8 @@ function showForm() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function getTratamiento(genero) {
-    return genero === 'femenino' ? 'Dña.' : 'D.';
-}
-
-function sanitize(input) {
-    return input.replace(/'/g, "&#39;").replace(/\"/g, "&quot;");
-}
-
-function generateWordText() {
-    const tratamiento = getTratamiento(certificateData.genero);
-    const fechaObj = new Date(certificateData.fecha);
-    const fechaFormateada = fechaObj.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
-    const fechaEmision = new Date(certificateData.fechaEmision);
-    const diaEmision = fechaEmision.getDate();
-    const mesEmision = fechaEmision.toLocaleDateString('es-ES', { month: 'long' });
-    const añoEmision = fechaEmision.getFullYear();
-
-    return `FUNDACIÓN ESPAÑOLA DE ENFERMEDADES PRIÓNICAS\nCertificado de Donación de Sangre\n\nPor la presente, ${tratamiento} Joaquín Castilla, con DNI 16287336R, en calidad de Presidente de la Fundación Española de Enfermedades Priónicas,\n\nCERTIFICA:\n\nQue ${tratamiento} ${certificateData.nombre}, con DNI ${certificateData.dni}, ha acudido el día ${fechaFormateada} de 2025, desde las ${certificateData.horaInicio} hasta las ${certificateData.horaFin} horas, a nuestras instalaciones para realizar una donación de sangre en colaboración con el Biobanco Vasco.\n\nEsta donación forma parte de la campaña especial de recolección de muestras biológicas para investigación en enfermedades priónicas.\n\nY para que así conste a los efectos oportunos de justificación laboral, se expide el presente certificado.\n\nEn ${certificateData.ciudad}, a ${diaEmision} de ${mesEmision} de ${añoEmision}.\n\n\n\n_________________________                    _________________________\nFdo.: Joaquín Castilla                      Fdo.: Izaro Kortazar\nPresidente                                  Facultativo especialista en neurología\nFundación Española de                       Responsable del Proyecto\nEnfermedades Priónicas`;
-}
-
 function copyToClipboard() {
-    const text = generateWordText();
-    navigator.clipboard.writeText(text).then(() => {
+    navigator.clipboard.writeText(generateWordText()).then(() => {
         alert('¡Texto copiado al portapapeles! Ahora puedes pegarlo en Word.');
     }).catch(err => {
         console.error('Error al copiar el texto: ', err);
@@ -90,80 +285,23 @@ function downloadWordDoc() {
 }
 
 function downloadHTML() {
-    const tratamiento = getTratamiento(certificateData.genero);
-    const fechaObj = new Date(certificateData.fecha);
-    const fechaFormateada = fechaObj.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+    const htmlContent = `<!DOCTYPE html><html lang='es'><head><meta charset='UTF-8'><title>Certificado de Donación</title></head><body><pre>${generateWordText()}</pre></body></html>`;
+    const newWindow = window.open('', '_blank');
+    newWindow.document.open();
+    newWindow.document.write(htmlContent);
+    newWindow.document.close();
+}
+
+function generateWordText() {
+    const tratamiento = certificateData.genero === 'femenino' ? 'Dña.' : 'D.';
+    const fechaFormateada = new Date(certificateData.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
     const fechaEmision = new Date(certificateData.fechaEmision);
     const diaEmision = fechaEmision.getDate();
     const mesEmision = fechaEmision.toLocaleDateString('es-ES', { month: 'long' });
     const añoEmision = fechaEmision.getFullYear();
 
-    const htmlContent = `<!DOCTYPE html>
-<html lang=\"es\">
-<head>
-<meta charset=\"UTF-8\">
-<title>Certificado de Donación - ${sanitize(certificateData.nombre)}</title>
-<style>
-    body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; line-height: 1.6; }
-    .certificate { border: 3px solid #2c5aa0; padding: 40px; max-width: 700px; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    .header { text-align: center; margin-bottom: 30px; }
-    .foundation-name { font-size: 18px; font-weight: bold; text-transform: uppercase; color: #2c5aa0; margin-bottom: 10px; }
-    .certificate-title { font-size: 16px; font-weight: bold; margin-bottom: 20px; }
-    .content { font-size: 14px; text-align: justify; }
-    .signatures { display: flex; justify-content: space-between; margin-top: 60px; }
-    .signature-block { text-align: center; flex: 1; }
-    .signature-line { border-bottom: 1px solid #333; height: 50px; margin-bottom: 10px; }
-    .signature-name { font-weight: bold; margin-bottom: 5px; }
-    .signature-title { font-size: 12px; color: #666; }
-    .footer-note { margin-top: 30px; font-size: 12px; border-top: 1px solid #ddd; padding-top: 15px; text-align: center; }
-    .print-btn { position: fixed; top: 20px; right: 20px; background: #2c5aa0; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
-    @media print { .print-btn { display: none; } body { margin: 0; } }
-</style>
-</head>
-<body>
-<button class=\"print-btn\" onclick=\"window.print()\">🖨️ Imprimir</button>
-<div class=\"certificate\">
-<div class=\"header\">
-    <div class=\"foundation-name\">Fundación Española de Enfermedades Priónicas</div>
-    <div class=\"certificate-title\">Certificado de Donación de Sangre</div>
-    <hr>
-</div>
-<div class=\"content\">
-    <p>Por la presente, <strong>${tratamiento} Joaquín Castilla</strong>, con DNI <strong>16287336R</strong>, en calidad de Presidente de la Fundación Española de Enfermedades Priónicas,</p>
-    <p><strong>CERTIFICA:</strong></p>
-    <p>Que <strong>${tratamiento} ${sanitize(certificateData.nombre)}</strong>, con DNI <strong>${sanitize(certificateData.dni)}</strong>, ha acudido el día <strong>${fechaFormateada}</strong> de 2025 entre las <strong>${certificateData.horaInicio}</strong> y las <strong>${certificateData.horaFin}</strong> horas, a nuestras instalaciones para realizar una donación de sangre en colaboración con el <strong>Biobanco Vasco</strong>.</p>
-    <p>Esta donación forma parte de la campaña especial de recolección de muestras biológicas para investigación en enfermedades priónicas.</p>
-    <p>Y para que así conste a los efectos oportunos de justificación laboral, se expide el presente certificado.</p>
-    <p>En <strong>${sanitize(certificateData.ciudad)}</strong>, a <strong>${diaEmision}</strong> de <strong>${mesEmision}</strong> de <strong>${añoEmision}</strong>.</p>
-</div>
-<div class=\"signatures\">
-    <div class=\"signature-block\">
-        <div class=\"signature-line\"></div>
-        <div class=\"signature-name\">Fdo.: Joaquín Castilla</div>
-        <div class=\"signature-title\">Presidente</div>
-        <div class=\"signature-title\">Fundación Española de Enfermedades Priónicas</div>
-    </div>
-    <div class=\"signature-block\">
-        <div class=\"signature-line\"></div>
-        <div class=\"signature-name\">Fdo.: Izaro Kortazar</div>
-        <div class=\"signature-title\">Facultativo especialista en neurología</div>
-        <div class=\"signature-title\">Responsable del Proyecto</div>
-    </div>
-</div>
-<div class=\"footer-note\">
-    <p><strong>Nota:</strong> Este documento tiene validez como justificante oficial de asistencia a donación de sangre.</p>
-</div>
-</div>
-</body>
-</html>`;
-
-    const newWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
-    if (newWindow) {
-        newWindow.document.open();
-        newWindow.document.write(htmlContent);
-        newWindow.document.close();
-    } else {
-        alert('No se pudo abrir la nueva ventana. Por favor, permite ventanas emergentes.');
-    }
+    return `FUNDACIÓN ESPAÑOLA DE ENFERMEDADES PRIÓNICAS\nCertificado de Donación de Sangre\n\nPor la presente, ${tratamiento} Joaquín Castilla, con DNI 16287336R, en calidad de Presidente de la Fundación Española de Enfermedades Priónicas,\n\nCERTIFICA:\n\nQue ${tratamiento} ${certificateData.nombre}, con DNI ${certificateData.dni}, ha acudido el día ${fechaFormateada} de 2025, desde las ${certificateData.horaInicio} hasta las ${certificateData.horaFin} horas, a nuestras instalaciones para realizar una donación de sangre en colaboración con el Biobanco Vasco.\n\nEsta donación forma parte de la campaña especial de recolección de muestras biológicas para investigación en enfermedades priónicas.\n\nY para que así conste a los efectos oportunos de justificación laboral, se expide el presente certificado.\n\nEn ${certificateData.ciudad}, a ${diaEmision} de ${mesEmision} de ${añoEmision}.\n\n\n_________________________                    _________________________\nFdo.: Joaquín Castilla                      Fdo.: Izaro Kortazar\nPresidente                                  Facultativo especialista en neurología\nFundación Española de                       Responsable del Proyecto\nEnfermedades Priónicas`;
 }
 </script>
+</body>
+</html>
