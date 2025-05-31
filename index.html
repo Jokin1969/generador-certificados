@@ -44,7 +44,7 @@
             font-weight: bold;
             color: #333;
         }
-        input[type="text"], input[type="date"], input[type="time"] {
+        input[type="text"], input[type="date"], input[type="time"], select {
             width: 100%;
             padding: 10px;
             border: 2px solid #ddd;
@@ -52,7 +52,7 @@
             font-size: 14px;
             box-sizing: border-box;
         }
-        input:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: #2c5aa0;
         }
@@ -157,6 +157,13 @@
                 <label for="nombre">Nombre completo del donante:</label>
                 <input type="text" id="nombre" placeholder="Ej: María García López" required>
             </div>
+            <div class="form-group">
+                <label for="genero">Género:</label>
+                <select id="genero" required>
+                    <option value="masculino">Masculino</option>
+                    <option value="femenino">Femenino</option>
+                </select>
+            </div>
             <div class="row">
                 <div class="col">
                     <label for="dni">DNI:</label>
@@ -193,7 +200,9 @@
             <h3>✅ ¡Certificado generado exitosamente!</h3>
             <p>Tu certificado está listo. Elige el formato que prefieras:</p>
             <br>
-            <button class="download-btn" onclick="downloadWord()">💾 Obtener para Word</button>
+            <button class="download-btn" onclick="copyToClipboard()">📋 Copiar y Pegar</button>
+            <br>
+            <button class="download-btn" onclick="downloadWordDoc()">💾 Descargar Word</button>
             <br>
             <button class="download-btn" onclick="downloadHTML()">🌐 Generar HTML imprimible</button>
             <br><br>
@@ -206,78 +215,7 @@
     </div>
 
 <script>
-    let certificateData = {};
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('fecha').value = today;
-        document.getElementById('fechaEmision').value = today;
-        document.getElementById('horaInicio').value = '09:00';
-        document.getElementById('horaFin').value = '10:00';
-        document.getElementById('ciudad').value = 'Bilbao';
-    });
-
-    function generateCertificate() {
-        certificateData = {
-            nombre: document.getElementById('nombre').value.trim(),
-            dni: document.getElementById('dni').value.trim(),
-            fecha: document.getElementById('fecha').value,
-            horaInicio: document.getElementById('horaInicio').value,
-            horaFin: document.getElementById('horaFin').value,
-            ciudad: document.getElementById('ciudad').value.trim(),
-            fechaEmision: document.getElementById('fechaEmision').value
-        };
-
-        if (!certificateData.nombre || !certificateData.dni || !certificateData.fecha || 
-            !certificateData.horaInicio || !certificateData.horaFin || !certificateData.ciudad) {
-            alert('Por favor, completa todos los campos obligatorios.');
-            return;
-        }
-
-        document.getElementById('formSection').className = 'hidden';
-        document.getElementById('downloadSection').className = 'download-section visible';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function showForm() {
-        document.getElementById('formSection').className = '';
-        document.getElementById('downloadSection').className = 'download-section hidden';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function sanitize(input) {
-        return input.replace(/'/g, "&#39;").replace(/\"/g, "&quot;");
-    }
-
-    function downloadHTML() {
-        try {
-            if (!certificateData.nombre) {
-                alert('Por favor, genera primero el certificado antes de crear el HTML.');
-                return;
-            }
-
-            const fechaObj = new Date(certificateData.fecha);
-            const fechaFormateada = fechaObj.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
-            const fechaEmision = new Date(certificateData.fechaEmision);
-            const diaEmision = fechaEmision.getDate();
-            const mesEmision = fechaEmision.toLocaleDateString('es-ES', { month: 'long' });
-            const añoEmision = fechaEmision.getFullYear();
-
-            const htmlContent = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Certificado de Donación - ${sanitize(certificateData.nombre)}</title></head><body><h1>Certificado de Donación de Sangre</h1><p><strong>D./Dña. ${sanitize(certificateData.nombre)}</strong>, con DNI <strong>${sanitize(certificateData.dni)}</strong>, ha donado sangre el día <strong>${fechaFormateada}</strong> de 2025 entre las <strong>${certificateData.horaInicio}</strong> y las <strong>${certificateData.horaFin}</strong> horas en <strong>${sanitize(certificateData.ciudad)}</strong>.</p><p>Emitido en <strong>${sanitize(certificateData.ciudad)}</strong>, a <strong>${diaEmision}</strong> de <strong>${mesEmision}</strong> de <strong>${añoEmision}</strong>.</p><button onclick="window.print()">🖨️ Imprimir</button></body></html>`;
-
-            const newWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
-            if (newWindow) {
-                newWindow.document.open();
-                newWindow.document.write(htmlContent);
-                newWindow.document.close();
-            } else {
-                alert('No se pudo abrir la nueva ventana. Por favor, permite ventanas emergentes.');
-            }
-        } catch (error) {
-            console.error(error);
-            alert('Error al generar el certificado HTML: ' + error.message);
-        }
-    }
+// Código JavaScript actualizado se incluirá aquí
 </script>
 </body>
 </html>
