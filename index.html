@@ -215,7 +215,118 @@
     </div>
 
 <script>
-// Código JavaScript actualizado se incluirá aquí
+    let certificateData = {};
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('fecha').value = today;
+        document.getElementById('fechaEmision').value = today;
+        document.getElementById('horaInicio').value = '09:00';
+        document.getElementById('horaFin').value = '10:00';
+        document.getElementById('ciudad').value = 'Bilbao';
+    });
+
+    function generateCertificate() {
+        certificateData = {
+            nombre: document.getElementById('nombre').value.trim(),
+            genero: document.getElementById('genero').value,
+            dni: document.getElementById('dni').value.trim(),
+            fecha: document.getElementById('fecha').value,
+            horaInicio: document.getElementById('horaInicio').value,
+            horaFin: document.getElementById('horaFin').value,
+            ciudad: document.getElementById('ciudad').value.trim(),
+            fechaEmision: document.getElementById('fechaEmision').value
+        };
+
+        if (!certificateData.nombre || !certificateData.dni || !certificateData.fecha || 
+            !certificateData.horaInicio || !certificateData.horaFin || !certificateData.ciudad) {
+            alert('Por favor, completa todos los campos obligatorios.');
+            return;
+        }
+
+        document.getElementById('formSection').classList.add('hidden');
+        document.getElementById('downloadSection').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showForm() {
+        document.getElementById('formSection').classList.remove('hidden');
+        document.getElementById('downloadSection').classList.add('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function getTratamiento(genero) {
+        return genero === 'femenino' ? 'Dña.' : 'D.';
+    }
+
+    function sanitize(input) {
+        return input.replace(/'/g, "&#39;").replace(/\"/g, "&quot;");
+    }
+
+    function generateWordText() {
+        const tratamiento = getTratamiento(certificateData.genero);
+        const fechaObj = new Date(certificateData.fecha);
+        const fechaFormateada = fechaObj.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+        const fechaEmision = new Date(certificateData.fechaEmision);
+        const diaEmision = fechaEmision.getDate();
+        const mesEmision = fechaEmision.toLocaleDateString('es-ES', { month: 'long' });
+        const añoEmision = fechaEmision.getFullYear();
+
+        return `FUNDACIÓN ESPAÑOLA DE ENFERMEDADES PRIÓNICAS\nCertificado de Donación de Sangre\n\nPor la presente, ${tratamiento} Joaquín Castilla, con DNI 16287336R, en calidad de Presidente de la Fundación Española de Enfermedades Priónicas,\n\nCERTIFICA:\n\nQue ${tratamiento} ${certificateData.nombre}, con DNI ${certificateData.dni}, ha acudido el día ${fechaFormateada} de 2025, desde las ${certificateData.horaInicio} hasta las ${certificateData.horaFin} horas, a nuestras instalaciones para realizar una donación de sangre en colaboración con el Biobanco Vasco.\n\nEsta donación forma parte de la campaña especial de recolección de muestras biológicas para investigación en enfermedades priónicas.\n\nY para que así conste a los efectos oportunos de justificación laboral, se expide el presente certificado.\n\nEn ${certificateData.ciudad}, a ${diaEmision} de ${mesEmision} de ${añoEmision}.\n\n\n\n_________________________                    _________________________\nFdo.: Joaquín Castilla                      Fdo.: Izaro Kortazar\nPresidente                                  Facultativo especialista en neurología\nFundación Española de                       Responsable del Proyecto\nEnfermedades Priónicas`;
+    }
+
+    function copyToClipboard() {
+        const text = generateWordText();
+        navigator.clipboard.writeText(text).then(() => {
+            alert('¡Texto copiado al portapapeles! Ahora puedes pegarlo en Word.');
+        }).catch(err => {
+            console.error('Error al copiar el texto: ', err);
+        });
+    }
+
+    function downloadWordDoc() {
+        const text = generateWordText();
+        const blob = new Blob([text], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'certificado_donacion.doc';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    function downloadHTML() {
+        try {
+            if (!certificateData.nombre) {
+                alert('Por favor, genera primero el certificado antes de crear el HTML.');
+                return;
+            }
+
+            const tratamiento = getTratamiento(certificateData.genero);
+            const fechaObj = new Date(certificateData.fecha);
+            const fechaFormateada = fechaObj.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+            const fechaEmision = new Date(certificateData.fechaEmision);
+            const diaEmision = fechaEmision.getDate();
+            const mesEmision = fechaEmision.toLocaleDateString('es-ES', { month: 'long' });
+            const añoEmision = fechaEmision.getFullYear();
+
+            const htmlContent = `<!DOCTYPE html><html lang=\"es\"><head><meta charset=\"UTF-8\"><title>Certificado de Donación - ${sanitize(certificateData.nombre)}</title></head><body><h1>Certificado de Donación de Sangre</h1><p><strong>${tratamiento} Joaquín Castilla</strong>, con DNI <strong>16287336R</strong>, en calidad de Presidente de la Fundación Española de Enfermedades Priónicas,</p><p><strong>CERTIFICA:</strong></p><p>Que <strong>${tratamiento} ${sanitize(certificateData.nombre)}</strong>, con DNI <strong>${sanitize(certificateData.dni)}</strong>, ha acudido el día <strong>${fechaFormateada}</strong> de 2025 entre las <strong>${certificateData.horaInicio}</strong> y las <strong>${certificateData.horaFin}</strong> horas, a nuestras instalaciones para realizar una donación de sangre en colaboración con el <strong>Biobanco Vasco</strong>.</p><p>Esta donación forma parte de la campaña especial de recolección de muestras biológicas para investigación en enfermedades priónicas.</p><p>Y para que así conste a los efectos oportunos de justificación laboral, se expide el presente certificado.</p><p>En <strong>${sanitize(certificateData.ciudad)}</strong>, a <strong>${diaEmision}</strong> de <strong>${mesEmision}</strong> de <strong>${añoEmision}</strong>.</p><button onclick=\"window.print()\">🖨️ Imprimir</button></body></html>`;
+
+            const newWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
+            if (newWindow) {
+                newWindow.document.open();
+                newWindow.document.write(htmlContent);
+                newWindow.document.close();
+            } else {
+                alert('No se pudo abrir la nueva ventana. Por favor, permite ventanas emergentes.');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Error al generar el certificado HTML: ' + error.message);
+        }
+    }
 </script>
 </body>
 </html>
