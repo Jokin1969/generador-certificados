@@ -21,6 +21,15 @@ body {
     margin-bottom: 30px;
 }
 
+.logo {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .title {
     font-size: 24px;
     font-weight: bold;
@@ -222,6 +231,20 @@ select {
     background: #c82333;
 }
 
+/* Estilos para firmas en certificados */
+.signature-image {
+    max-width: 120px;
+    max-height: 60px;
+    object-fit: contain;
+    margin: 10px 0;
+}
+
+.certificate-logo {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
 /* Responsive design */
 @media (max-width: 600px) {
     .row {
@@ -245,6 +268,19 @@ select {
         min-width: auto;
         width: 100%;
         margin: 5px 0;
+    }
+    
+    .logo {
+        max-width: 120px;
+    }
+    
+    .signature-image {
+        max-width: 100px;
+        max-height: 50px;
+    }
+    
+    .certificate-logo {
+        max-width: 80px;
     }
 }
 
